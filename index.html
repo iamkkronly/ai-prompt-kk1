@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧠 AI Prompt Generator</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 700px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+      transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 34px;
+      margin-bottom: 30px;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    select option[disabled] {
+      color: #999;
+      background-color: #2c2c3e;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      background: linear-gradient(to right, #ff6ec4, #7873f5);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    #output {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+      min-height: 120px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #eaeaea;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    .loading::after {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-left: 10px;
+      border: 3px solid #fff;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<div class="glass-card">
+  <h1>🧠 AI Prompt Generator</h1>
+
+  <div class="form-group">
+    <label for="topic">Enter Topic</label>
+    <input type="text" id="topic" placeholder="e.g., Climate Change or Quantum Computing">
+  </div>
+
+  <div class="grid">
+    <div class="form-group">
+      <label for="style">Prompt Style</label>
+      <select id="style">
+        <option value="" disabled selected>Select a style</option>
+        <option value="Creative">Creative</option>
+        <option value="Technical">Technical</option>
+        <option value="Educational">Educational</option>
+        <option value="Persuasive">Persuasive</option>
+        <option value="Informative">Informative</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="tone">Tone</label>
+      <select id="tone">
+        <option value="" disabled selected>Select a tone</option>
+        <option value="Formal">Formal</option>
+        <option value="Friendly">Friendly</option>
+        <option value="Casual">Casual</option>
+        <option value="Professional">Professional</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="length">Length</label>
+      <select id="length">
+        <option value="" disabled selected>Select a length</option>
+        <option value="Short">Short</option>
+        <option value="Medium">Medium</option>
+        <option value="Long">Long</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="audience">Target Audience</label>
+      <select id="audience">
+        <option value="" disabled selected>Select target audience</option>
+        <option value="Kids">Kids</option>
+        <option value="Students">Students</option>
+        <option value="Professionals">Professionals</option>
+        <option value="General Public">General Public</option>
+      </select>
+    </div>
+  </div>
+
+  <button onclick="generatePrompt()">Generate Prompt</button>
+
+  <div id="output"></div>
+</div>
+
+<script>
+  const GOOGLE_API_KEY = "AIzaSyCrV8RJ-kUj-LCxbqfB1QMa6RsPQ4bM80Y"; // Replace
+  const SEARCH_ENGINE_ID = "735baae6a3cee4779"; // Replace
+  const GEMINI_API_KEY = "AIzaSyAUS24UaK5kfxrfuUCue5zmyX3n3yD7Yek"; // Replace
+
+  async function generatePrompt() {
+    const topic = document.getElementById("topic").value.trim();
+    const style = document.getElementById("style").value;
+    const tone = document.getElementById("tone").value;
+    const length = document.getElementById("length").value;
+    const audience = document.getElementById("audience").value;
+    const outputDiv = document.getElementById("output");
+
+    if (!topic) {
+      alert("Please enter a topic.");
+      return;
+    }
+
+    if (!style || !tone || !length || !audience) {
+      alert("Please select all options before generating a prompt.");
+      return;
+    }
+
+    outputDiv.innerHTML = '<span class="loading">🔍 Fetching data from Google</span>';
+
+    try {
+      const searchResults = await googleSearch(topic);
+      const prompt = await generateWithGemini(topic, style, tone, length, audience, searchResults);
+      outputDiv.innerHTML = `<h3 style="color:#ffffffcc;">✨ Generated Prompt:</h3><p>${prompt}</p>`;
+    } catch (error) {
+      console.error(error);
+      outputDiv.innerHTML = "<p style='color:red;'>⚠️ Error generating prompt. Please try again.</p>";
+    }
+  }
+
+  async function googleSearch(query) {
+    const url = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const items = data.items || [];
+    const snippets = items.slice(0, 3).map(item => item.snippet).join("\n");
+    return snippets;
+  }
+
+  async function generateWithGemini(topic, style, tone, length, audience, context) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+
+    const promptMsg = `
+Based on this context:\n\n${context}\n\nCreate an ${style.toLowerCase()} AI prompt about "${topic}".
+Use a ${tone.toLowerCase()} tone.
+Make it ${length.toLowerCase()} in length.
+Targeted towards: ${audience}.
+The prompt should be optimized for content generation.
+`;
+
+    const body = {
+      contents: [{
+        parts: [{ text: promptMsg }],
+        role: "user"
+      }]
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Failed to generate response.";
+  }
+</script>
+
+</body>
+</html>
